@@ -9,18 +9,19 @@ import Efeitos.Efeito;
 public abstract class Entidade {
     private String nome;
     private int vida;
+    private int vidaMaxima; /*futuramente vai servir para alguma carta de cura */
     private int escudo;
     private ArrayList<Efeito> efeitos = new ArrayList<>();
     private int velocidade;
-    private int acaoEscolhida;  /*a posicao da acao em acoes que o inimigo vai fazer ou a posicao da acao em cartasNaMao que o heroi vai fazer*/
+    private Carta acaoEscolhida;  /*a acao em acoes que o inimigo vai fazer ou a posicao da acao em cartasNaMao que o heroi vai fazer*/
     private Entidade alvo;  /*o alvo da sua ação */
 
-    public Entidade(String nome, int vida, int escudo, int velocidade){
+    public Entidade(String nome, int vida,  int escudo, int velocidade){
         this.nome = nome;
         this.vida = vida;
         this.escudo = escudo;
         this.velocidade = velocidade;
-        
+        this.vidaMaxima = vida;
     }
     public void receberDano(int dano){
         escudo -= dano;
@@ -49,6 +50,9 @@ public abstract class Entidade {
     public int getVida(){
         return this.vida;
     }
+    public int getVidaMaxima(){
+        return this.vidaMaxima;
+    }
     public int getEscudo(){ 
         return this.escudo;
     }
@@ -58,7 +62,7 @@ public abstract class Entidade {
     public ArrayList<Efeito> getEfeitos(){
         return efeitos;
     }
-    public int getAcaoEscolhida(){
+    public Carta getAcaoEscolhida(){
         return acaoEscolhida;
     }
     public Entidade getAlvo(){
@@ -67,8 +71,10 @@ public abstract class Entidade {
     public void mudarAlvo(Entidade alvo){
         this.alvo = alvo;
     }
-    public void mudarEscolha(int escolha){
-        this.acaoEscolhida = escolha;
+    public abstract void mudarEscolha(int escolha);
+
+    public void mudarAcaoEscolhida(Carta nova){
+        acaoEscolhida = nova;
     }
 
     public void removerEfeito(Efeito removido){
@@ -88,7 +94,7 @@ public abstract class Entidade {
     
     }
     public void getStatus(){
-        System.out.print(getNome() + " (" + getVida() + "/40 de vida) (" + getEscudo() + " de escudo)");
+        System.out.print(getNome() + " (" + getVida() + "/" + getVidaMaxima() + " de vida) (" + getEscudo() + " de escudo)");
         for (int i = 0; i < getEfeitos().size(); i++){
             System.out.print(" (" + getEfeitos().get(i).getAcumulo() + " de " + getEfeitos().get(i).getNome() + ")");
         }

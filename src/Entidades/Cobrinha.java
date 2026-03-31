@@ -15,11 +15,11 @@ public class Cobrinha extends Inimigo{
     }
     private void determinarAcoes(){
         acoes = new Carta[10];
-        CartaDano espada = new CartaDano("Cauda de chicote", "causa 10 de dano ao inimigo ",2); /*custo só serve para determinar o dano */
+        CartaDano espada = new CartaDano("Cauda de chicote", "causa 10 de dano ao inimigo ",1); /*custo só serve para determinar o dano */
         CartaEscudo escudo = new CartaEscudo("Pele endurecida","concede 5 de escudo ao usuário ", 1);
         CartaForca bomba = new CartaForca("Esteróide", "concede +1 de força ", 1);
         CartaVeneno dardo = new CartaVeneno("Mordida venenosa", "concede +1 de veneno ", 1);
-        for (int i = 0; i < 2; i += 5){ /*40% cartaDano, 20% cartaEscudo, 20% cartaForca, 20% cartaVeneno */
+        for (int i = 0; i < 10; i += 5){ /*40% cartaDano, 20% cartaEscudo, 20% cartaForca, 20% cartaVeneno */
             acoes[i] = espada;
             acoes[i + 1] = escudo;
             acoes[i + 2] = bomba;
@@ -31,9 +31,9 @@ public class Cobrinha extends Inimigo{
     public void anuncio(Heroi heroi, List<Inimigo> inimigos){
         Random gerador = new Random();
         mudarEscolha(gerador.nextInt(10));
-        if (getAcoes()[getAcaoEscolhida()].getMomentos() == 2 || getAcoes()[getAcaoEscolhida()].getMomentos() == 8){   /*afeta o heroi */
+        if (getAcaoEscolhida().getMomentos() == 2 || getAcaoEscolhida().getMomentos() == 8){   /*afeta o heroi */
             mudarAlvo(heroi);
-        }else if (getAcoes()[getAcaoEscolhida()].getMomentos() == 6){ /* carta de buff */
+        }else if (getAcaoEscolhida().getMomentos() == 6){ /* carta de buff */
             mudarAlvo(inimigos.get(0));     /*afeta o inimigo que estiver com mais vida*/
             for (int i = 1; i < inimigos.size(); i++){
                 if (inimigos.get(i - 1).getVida() < inimigos.get(i).getVida()){
@@ -43,11 +43,11 @@ public class Cobrinha extends Inimigo{
         }else{  /*carta de defesa */
             mudarAlvo(inimigos.get(0));     /*afeta o inimigo que estiver com menos vida*/
             for (int i = 1; i < inimigos.size(); i++){
-                if (inimigos.get(i - 1).getVida() > inimigos.get(i - 1).getVida()){
+                if (inimigos.get(i - 1).getVida() > inimigos.get(i).getVida()){
                     mudarAlvo(inimigos.get(i - 1));
                 }
             }
         }        
-        System.out.println(getNome() + " está se preparando para usar " + getAcoes()[getAcaoEscolhida()].getNome() + ". Esse ataque " + getAcoes()[getAcaoEscolhida()].getDescricao()); /*mudar a saida */
+        System.out.println(getNome() + " está se preparando para usar " + getAcaoEscolhida().getNome() + " em " + getAlvo().getNome() +". Esse ataque " + getAcaoEscolhida().getDescricao()); /*mudar a saida */
     }
 }

@@ -8,7 +8,8 @@ public class Veneno extends Efeito {
     }
     public void acionado(){
         getDono().receberDano(3);
+        System.out.println(getNome() + " abaixou em 1 o seu acúmulo e causou +3 de dano em " + getDono().getNome());
         alterarAcumulo(-1);
-        System.out.println(getNome() + " abaixou em 1 o seu acúmulo e causou +3 de dano em " + getDono().getAlvo().getNome());
+
     }
 }

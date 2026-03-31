@@ -12,10 +12,13 @@ public abstract class Inimigo extends Entidade {
     public Carta[] getAcoes(){
         return acoes;
     }
+    public void mudarEscolha(int escolha){
+        mudarAcaoEscolhida(acoes[escolha]);
+    }
 
     public boolean realizarAcao(Heroi heroi, List<Inimigo> inimigos, Scanner comandoScanner){ /*vai aplicar a escolha feita pela função anuncio, nao usa scanner (não sei como remover esse scanner de forma prática)*/
-        System.out.println(getNome() + " usou " + acoes[getAcaoEscolhida()].getNome() + ". ");
-        acoes[getAcaoEscolhida()].usar(getAlvo());
+        System.out.println(getNome() + " usou " + getAcaoEscolhida().getNome() + ". ");
+        getAcaoEscolhida().usar(getAlvo());
         return false;
     }
     public Carta cartaUtilizada(int posicao){

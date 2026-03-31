@@ -9,7 +9,7 @@ public class CartaVeneno extends Carta{
     }
 
     public void usar(Entidade alvo){
-        alvo.aplicarEfeito(new Veneno("Veneno fraco", alvo, getCusto()));
+        alvo.aplicarEfeito(new Veneno("Veneno fraco", alvo, getCusto() * 2));
         System.out.println(alvo.getNome() + " recebeu +" + getCusto() + " acúmulos de veneno.\n");
     }
 }
